@@ -1,13 +1,11 @@
-package main
+package helloworld
 
 import (
 	"errors"
 	"fmt"
+	"github.com/aws/aws-lambda-go/events"
 	"io/ioutil"
 	"net/http"
-
-	"github.com/aws/aws-lambda-go/events"
-	"github.com/aws/aws-lambda-go/lambda"
 )
 
 var (
@@ -21,7 +19,7 @@ var (
 	ErrNon200Response = errors.New("Non 200 Response found")
 )
 
-func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	resp, err := http.Get(DefaultHTTPGetAddress)
 	if err != nil {
 		return events.APIGatewayProxyResponse{}, err
@@ -46,6 +44,3 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 	}, nil
 }
 
-func main() {
-	lambda.Start(handler)
-}
